@@ -3,12 +3,13 @@
 * [Vue 2 + Firebase: How to build a Vue app with Firebase authentication system in 15 minutes](https://medium.com/@anas.mammeri/vue-2-firebase-how-to-build-a-vue-app-with-firebase-authentication-system-in-15-minutes-fdce6f289c3c)
 * [Building Real Time Single Page Web Applications With Vue.js 2 and Firebase](https://medium.com/codingthesmartway-com-blog/vue-js-2-firebase-e4b2479e35a8)
 * [JetBrains Vue.js (Ultimate Edition)](https://www.jetbrains.com/help/idea/vue-js.html)
+* [Firebase DB security](https://firebase.google.com/docs/database/security/quickstart?authuser=0)
 
 ## Preparation
 ### Dependencies
 ```
 npm install -g vue-cli
-npm install ——save firebase
+npm install ——save firebase vuefire
 ```
 
 ### Project setup
