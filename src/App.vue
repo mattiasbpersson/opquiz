@@ -22,26 +22,11 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-
-var config = {
-  apiKey: 'AIzaSyCt1w3N_MYfIQHrPFFTo1ESzqIfPBpCGuY',
-  authDomain: 'opquiz-134a5.firebaseapp.com',
-  databaseURL: 'https://opquiz-134a5.firebaseio.com',
-  projectId: 'opquiz-134a5',
-  storageBucket: 'opquiz-134a5.appspot.com',
-  messagingSenderId: '630674965180'
-}
-
-let app = firebase.initializeApp(config)
-
-let db = app.database()
-let questionsRef = db.ref('questions')
+import {db} from './firebase';
 
 export default {
-  name: 'App',
   firebase: {
-    questions: questionsRef
+    questions: db.ref('questions')
   }
 }
 </script>
