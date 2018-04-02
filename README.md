@@ -10,6 +10,7 @@
 ```
 npm install -g vue-cli
 npm install ——save firebase vuefire
+npm install -g firebase-tools
 ```
 
 ### Project setup
@@ -31,6 +32,55 @@ vue init webpack opquiz
 ? Should we run `npm install` for you after the project has been created? (recommended) npm
 
    vue-cli · Generated "opquiz".
+```
+
+### Firebase CLI
+```
+firebase login
+firebase init
+
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/matper/Projects/opquiz
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+
+? Which Firebase CLI features do you want to setup for this folder? Press Space to select features, then Enter to confirm y
+our choices. Hosting: Configure and deploy Firebase Hosting sites
+
+=== Project Setup
+
+First, let's associate this project directory with a Firebase project.
+You can create multiple project aliases by running firebase use --add, 
+but for now we'll just set up a default project.
+
+i  .firebaserc already has a default project, skipping
+
+=== Hosting Setup
+
+Your public directory is the folder (relative to your project directory) that
+will contain Hosting assets to be uploaded with firebase deploy. If you
+have a build process for your assets, use your build's output directory.
+
+? What do you want to use as your public directory? .
+? Configure as a single-page app (rewrite all urls to /index.html)? No
+✔  Wrote ./404.html
+? File ./index.html already exists. Overwrite? No
+i  Skipping write of ./index.html
+
+i  Writing configuration info to firebase.json...
+i  Writing project information to .firebaserc...
+
+✔  Firebase initialization complete!
+firebase deploy
 ```
 
 ## Build Setup
