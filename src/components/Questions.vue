@@ -23,6 +23,7 @@
 import {db} from '@/firebase';
 
 export default {
+  name: "Questions",
   firebase: {
       questions: db.ref('questions')
   }
