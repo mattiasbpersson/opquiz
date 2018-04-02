@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <p><router-link to="/add-question">AddQuestion</router-link></p>
         <table class="table table-striped">
             <thead>
             <tr>

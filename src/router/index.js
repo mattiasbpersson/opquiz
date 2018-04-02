@@ -8,12 +8,16 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '*',
+      redirect: '/'
+    },
+    {
       path: '/',
       name: 'Questions',
       component: Questions
     },
     {
-      path: '/AddQuestion',
+      path: '/add-question',
       name: 'AddQuestion',
       component: AddQuestion
     }
