@@ -10,7 +10,7 @@
             </thead>
             <tbody>
             <tr v-for="(question) in questions" :key="question.question">
-                <td>{{question['.key']}}</td>
+                <td>{{question.question}}</td>
                 <td>{{question.alternatives}}</td>
                 <td>{{question.answer}}</td>
             </tr>
