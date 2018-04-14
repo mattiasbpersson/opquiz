@@ -14,17 +14,17 @@
                 class='question'
                 :key="question['.key']">
                 <td>
-                <template v-if="question != editedQuestion">   
+                <template v-if="question != editedQuestion">
                     <div class="view" @click="editQuestion(question)">{{question.question}}</div>
                 </template>
-                <template v-if="question == editedQuestion"> 
+                <template v-if="question == editedQuestion">
                 <input class="edit" type="text"
                     v-model="question.question"
                     v-question-focus="question == editedQuestion"
                     @blur="doneEdit(question)"
                     @keyup.enter="doneEdit(question)"
                     @keyup.esc="cancelEdit(question)">
-                </template>   
+                </template>
                 </td>
                 <td>{{question.alternatives}}</td>
                 <td>{{question.answer}}</td>
@@ -35,56 +35,56 @@
 </template>
 
 <script>
-import { db } from "@/firebase";
+import { db } from '@/firebase'
 
 export default {
-  name: "Questions",
+  name: 'Questions',
   firebase: {
-    questions: db.ref("questions")
+    questions: db.ref('questions')
   },
-  data() {
+  data () {
     return {
       editedQuestion: null
-    };
+    }
   },
   methods: {
-    editQuestion: function(question) {
-      console.log(question.question);
-      this.beforeEditCache = question;
-      this.editedQuestion = question;
+    editQuestion: function (question) {
+      console.log(question.question)
+      this.beforeEditCache = question
+      this.editedQuestion = question
     },
-    doneEdit: function(question) {
+    doneEdit: function (question) {
       if (!this.editedQuestion) {
-        return;
+        return
       }
-      this.editedQuestion = null;
-      question.question = question.question.trim();
+      this.editedQuestion = null
+      question.question = question.question.trim()
       if (!question.question) {
-        //this.removeQuestion(question);
+        // this.removeQuestion(question);
       }
       this.saveEdit(question)
     },
-    saveEdit: function(question) {
+    saveEdit: function (question) {
       // create a copy of the item
-      const copy = { ...question };
+      const copy = { ...question }
       // remove the .key attribute
-      delete copy[".key"];
+      delete copy['.key']
       this.$firebaseRefs.questions.child(question['.key']).set(copy)
-      //questions.child(item[".key"]).set(copy);
+      // questions.child(item[".key"]).set(copy);
     },
-    cancelEdit: function(question) {
-      this.editedQuestion = null;
-      question = this.beforeEditCache;
+    cancelEdit: function (question) {
+      this.editedQuestion = null
+      question = this.beforeEditCache
     }
   },
   directives: {
-    "question-focus": function(el, binding) {
+    'question-focus': function (el, binding) {
       if (binding.value) {
-        el.focus();
+        el.focus()
       }
     }
   }
-};
+}
 </script>
 <style scoped>
 [v-cloak] {

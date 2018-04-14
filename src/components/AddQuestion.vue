@@ -20,31 +20,31 @@
 </template>
 
 <script>
-import { db } from "@/firebase";
+import { db } from '@/firebase'
 
 export default {
-  name: "AddQuestion",
+  name: 'AddQuestion',
   firebase: {
-    questions: db.ref("questions")
+    questions: db.ref('questions')
   },
-  data() {
+  data () {
     return {
       newQuestion: {
-        question: "",
-        alternatives: "",
-        answer: ""
+        question: '',
+        alternatives: '',
+        answer: ''
       }
-    };
+    }
   },
   methods: {
-    addQuestion: function() {
-      this.$firebaseRefs.questions.push(this.newQuestion);
-      this.newQuestion.question = "";
-      this.newQuestion.alternatives = "";
-      this.newQuestion.answer = "";
+    addQuestion: function () {
+      this.$firebaseRefs.questions.push(this.newQuestion)
+      this.newQuestion.question = ''
+      this.newQuestion.alternatives = ''
+      this.newQuestion.answer = ''
     }
   }
-};
+}
 </script>
 <style scoped>
 
