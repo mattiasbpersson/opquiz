@@ -1,6 +1,5 @@
 <template>
-    <div id="app">
-        <p><router-link to="/add-question">AddQuestion</router-link></p>
+  <div id="app">
     <v-dialog v-model="dialog" max-width="500px">
       <v-btn color="primary" dark slot="activator" class="mb-2">New Question</v-btn>
       <v-card>
@@ -29,12 +28,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-data-table
-      :headers="headers"
-      :items="questions"
-      hide-actions
-      class="elevation-1"
-    >
+    <v-data-table :headers="headers" :items="questions" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{ props.item.question }}</td>
         <td class="text-xs-left">{{ props.item.alternatives }}</td>
@@ -50,11 +44,11 @@
       </template>
       <template slot="no-data">
         <v-alert :value="true" color="error" icon="warning">
-           No questions found
+          No questions found
         </v-alert>
       </template>
     </v-data-table>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -108,9 +102,9 @@ export default {
     },
     save() {
       console.log('Save: ' + this.editedKey);
-      delete this.editedItem['.key']
+      delete this.editedItem['.key'];
       if (this.editedKey != '') {
-        this.$firebaseRefs.questions.child(this.editedKey).set(this.editedItem)
+        this.$firebaseRefs.questions.child(this.editedKey).set(this.editedItem);
       } else {
         this.$firebaseRefs.questions.push(this.editedItem);
       }

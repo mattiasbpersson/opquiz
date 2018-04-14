@@ -1,14 +1,16 @@
 <template>
-    <div id="app">
-         <p><router-link to="/">View All</router-link></p>
-         <v-form id="form" ref="addQuestionForm" lazy-validation>
-           <v-text-field label="Question" :rules="valueRules" v-model="newQuestion.question" required></v-text-field>
-           <v-text-field label="Alternatives" :rules="valueRules" v-model="newQuestion.alternatives" required></v-text-field>
-           <v-text-field label="Answer" :rules="valueRules" v-model="newQuestion.answer" required></v-text-field>
-           <v-btn @click="addQuestion" :disabled="!valid">add</v-btn>
-           <v-btn @click="clear">clear</v-btn>
-        </v-form>
-    </div>
+  <div id="app">
+    <p>
+      <router-link to="/">View All</router-link>
+    </p>
+    <v-form id="form" ref="addQuestionForm" lazy-validation>
+      <v-text-field label="Question" :rules="valueRules" v-model="newQuestion.question" required></v-text-field>
+      <v-text-field label="Alternatives" :rules="valueRules" v-model="newQuestion.alternatives" required></v-text-field>
+      <v-text-field label="Answer" :rules="valueRules" v-model="newQuestion.answer" required></v-text-field>
+      <v-btn @click="addQuestion" :disabled="!valid">add</v-btn>
+      <v-btn @click="clear">clear</v-btn>
+    </v-form>
+  </div>
 </template>
 <v-text-field
       label="Name"
@@ -43,7 +45,7 @@ export default {
         this.newQuestion.question = '';
         this.newQuestion.alternatives = '';
         this.newQuestion.answer = '';
-        this.$refs.addQuestionForm.reset()
+        this.$refs.addQuestionForm.reset();
       }
     },
     clear() {
