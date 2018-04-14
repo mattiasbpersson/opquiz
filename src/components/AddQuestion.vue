@@ -1,50 +1,56 @@
 <template>
     <div id="app">
          <p><router-link to="/">View All</router-link></p>
-         <form id="form" class="form-inline" v-on:submit.prevent="addQuestion">
-          <div class="form-group">
-            <label for="questionTitle">Question:</label>
-            <input type="text" id="question" class="form-control" v-model="newQuestion.question">
-          </div>
-          <div class="form-group">
-            <label for="Alternatives">Alternatives:</label>
-            <input type="text" id="questionAlternatives" class="form-control" v-model="newQuestion.alternatives">
-          </div>
-          <div class="form-group">
-            <label for="Answer">Answer:</label>
-            <input type="text" id="questionAnswer" class="form-control" v-model="newQuestion.answer">
-          </div>
-          <input type="submit" class="btn btn-primary" value="Add Question">
-        </form>
+         <v-form id="form" ref="addQuestionForm" lazy-validation>
+           <v-text-field label="Question" :rules="valueRules" v-model="newQuestion.question" required></v-text-field>
+           <v-text-field label="Alternatives" :rules="valueRules" v-model="newQuestion.alternatives" required></v-text-field>
+           <v-text-field label="Answer" :rules="valueRules" v-model="newQuestion.answer" required></v-text-field>
+           <v-btn @click="addQuestion" :disabled="!valid">add</v-btn>
+           <v-btn @click="clear">clear</v-btn>
+        </v-form>
     </div>
 </template>
-
+<v-text-field
+      label="Name"
+      v-model="name"
+      :rules="nameRules"
+      :counter="10"
+      required
+    ></v-text-field>
 <script>
-import { db } from '@/firebase'
+import { db } from '@/firebase';
 
 export default {
   name: 'AddQuestion',
   firebase: {
     questions: db.ref('questions')
   },
-  data () {
+  data() {
     return {
+      valid: true,
+      valueRules: [v => !!v || 'Value is required'],
       newQuestion: {
         question: '',
         alternatives: '',
         answer: ''
       }
-    }
+    };
   },
   methods: {
-    addQuestion: function () {
-      this.$firebaseRefs.questions.push(this.newQuestion)
-      this.newQuestion.question = ''
-      this.newQuestion.alternatives = ''
-      this.newQuestion.answer = ''
+    addQuestion: function() {
+      if (this.$refs.addQuestionForm.validate()) {
+        this.$firebaseRefs.questions.push(this.newQuestion);
+        this.newQuestion.question = '';
+        this.newQuestion.alternatives = '';
+        this.newQuestion.answer = '';
+        this.$refs.addQuestionForm.reset()
+      }
+    },
+    clear() {
+      this.$refs.addQuestionForm.reset();
     }
   }
-}
+};
 </script>
 <style scoped>
 
