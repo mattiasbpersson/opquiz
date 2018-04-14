@@ -7,24 +7,26 @@
           <span class="headline">{{ formTitle }}</span>
         </v-card-title>
         <v-card-text>
-          <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Question" v-model="editedItem.question"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Alternativs" v-model="editedItem.alternatives"></v-text-field>
-              </v-flex>
-              <v-flex xs12 sm6 md4>
-                <v-text-field label="Answer" v-model="editedItem.answer"></v-text-field>
-              </v-flex>
-            </v-layout>
-          </v-container>
+          <v-form id="form" ref="addQuestionForm" lazy-validation>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field label="Question" :rules="valueRules" v-model="editedItem.question" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field label="Alternativs" :rules="valueRules" v-model="editedItem.alternatives" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field label="Answer" :rules="valueRules" v-model="editedItem.answer" required></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn flat @click.native="close">Cancel</v-btn>
-          <v-btn flat @click.native="save">Save</v-btn>
+          <v-btn flat @click.native="save" :disabled="!valid">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -61,7 +63,8 @@ export default {
   },
   data() {
     return {
-      editedQuestion: null,
+      valid: true,
+      valueRules: [v => !!v || 'Value is required'],
       dialog: false,
       headers: [
         { text: 'Question', value: 'question' },
@@ -102,13 +105,17 @@ export default {
     },
     save() {
       console.log('Save: ' + this.editedKey);
-      delete this.editedItem['.key'];
-      if (this.editedKey != '') {
-        this.$firebaseRefs.questions.child(this.editedKey).set(this.editedItem);
-      } else {
-        this.$firebaseRefs.questions.push(this.editedItem);
+      if (this.$refs.addQuestionForm.validate()) {
+        delete this.editedItem['.key'];
+        if (this.editedKey != '') {
+          this.$firebaseRefs.questions
+            .child(this.editedKey)
+            .set(this.editedItem);
+        } else {
+          this.$firebaseRefs.questions.push(this.editedItem);
+        }
+        this.close();
       }
-      this.close();
     }
   },
   computed: {
@@ -116,7 +123,7 @@ export default {
       return this.editedKey === '' ? 'New Item' : 'Edit Item';
     }
   }
-};
+}
 </script>
 <style scoped>
 [v-cloak] {
