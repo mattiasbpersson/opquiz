@@ -66,14 +66,14 @@
 </template>
 
 <script>
-import { db } from '@/firebase'
+import { db } from '@/firebase';
 
 export default {
   name: 'Questions',
   firebase: {
     questions: db.ref('questions')
   },
-  data () {
+  data() {
     return {
       valid: true,
       valueRules: [v => !!v || 'Value is required'],
@@ -86,7 +86,10 @@ export default {
       ],
       headers: [
         { text: 'Question', value: 'question' },
-        { text: 'Alternatives', value: 'alternatives' },
+        { text: 'Alternative 1', value: 'alternative1' },
+        { text: 'Alternative 2', value: 'alternative2' },
+        { text: 'Alternative 3', value: 'alternative3' },
+        { text: 'Alternative 4', value: 'alternative4' },
         { text: 'Answer', value: 'answer' }
       ],
       editedKey: '',
@@ -100,48 +103,48 @@ export default {
         alternatives: ['', '', '', ''],
         answer: -1
       }
-    }
+    };
   },
   methods: {
-    editItem (question) {
-      this.editedKey = question['.key']
-      console.log('EditItem: ' + this.editedKey)
-      this.editedItem = Object.assign({}, question)
-      this.dialog = true
+    editItem(question) {
+      this.editedKey = question['.key'];
+      console.log('EditItem: ' + this.editedKey);
+      this.editedItem = Object.assign({}, question);
+      this.dialog = true;
     },
-    deleteItem (question) {
+    deleteItem(question) {
       confirm('Are you sure you want to delete this item?') &&
-        this.$firebaseRefs.questions.child(question['.key']).remove()
+        this.$firebaseRefs.questions.child(question['.key']).remove();
     },
-    close () {
-      this.dialog = false
+    close() {
+      this.dialog = false;
       setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem)
-        console.log(this.editedItem)
-        this.editedKey = -1
-      }, 300)
+        this.editedItem = Object.assign({}, this.defaultItem);
+        console.log(this.editedItem);
+        this.editedKey = -1;
+      }, 300);
     },
-    save () {
-      console.log('Save: ' + this.editedKey)
+    save() {
+      console.log('Save: ' + this.editedKey);
       if (this.$refs.addQuestionForm.validate()) {
-        delete this.editedItem['.key']
+        delete this.editedItem['.key'];
         if (this.editedKey !== '') {
           this.$firebaseRefs.questions
             .child(this.editedKey)
-            .set(this.editedItem)
+            .set(this.editedItem);
         } else {
-          this.$firebaseRefs.questions.push(this.editedItem)
+          this.$firebaseRefs.questions.push(this.editedItem);
         }
-        this.close()
+        this.close();
       }
     }
   },
   computed: {
-    formTitle () {
-      return this.editedKey === '' ? 'New Item' : 'Edit Item'
+    formTitle() {
+      return this.editedKey === '' ? 'New Item' : 'Edit Item';
     }
   }
-}
+};
 </script>
 <style scoped>
 [v-cloak] {

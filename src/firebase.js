@@ -1,6 +1,6 @@
 import Firebase from 'firebase'
 
-const firebaseApp = Firebase.initializeApp({
+export const firebaseApp = Firebase.initializeApp({
   apiKey: 'AIzaSyCt1w3N_MYfIQHrPFFTo1ESzqIfPBpCGuY',
   authDomain: 'opquiz-134a5.firebaseapp.com',
   databaseURL: 'https://opquiz-134a5.firebaseio.com',
