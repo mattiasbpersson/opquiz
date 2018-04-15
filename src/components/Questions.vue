@@ -14,10 +14,19 @@
                   <v-text-field label="Question" :rules="valueRules" v-model="editedItem.question" required></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field label="Alternativs" :rules="valueRules" v-model="editedItem.alternatives" required></v-text-field>
+                  <v-text-field value=0 :label=alternativeLabels[0].name :rules="valueRules" v-model="editedItem.alternatives[0]" required></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md4>
-                  <v-text-field label="Answer" :rules="valueRules" v-model="editedItem.answer" required></v-text-field>
+                  <v-text-field value=1 :label=alternativeLabels[1].name :rules="valueRules" v-model="editedItem.alternatives[1]" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field value=2 :label=alternativeLabels[2].name :rules="valueRules" v-model="editedItem.alternatives[2]" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-text-field value=3 :label=alternativeLabels[3].name :rules="valueRules" v-model="editedItem.alternatives[3]" required></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md4>
+                  <v-select label="Answer" item-value="value" item-text="name" v-model="editedItem.answer" :items="alternativeLabels" :rules="[v => v >=0 || 'Selection is required']" required></v-select>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -33,8 +42,11 @@
     <v-data-table :headers="headers" :items="questions" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{ props.item.question }}</td>
-        <td class="text-xs-left">{{ props.item.alternatives }}</td>
-        <td class="text-xs-left">{{ props.item.answer }}</td>
+        <td class="text-xs-left">{{ props.item.alternatives[0] }}</td>
+        <td class="text-xs-left">{{ props.item.alternatives[1] }}</td>
+        <td class="text-xs-left">{{ props.item.alternatives[2] }}</td>
+        <td class="text-xs-left">{{ props.item.alternatives[3] }}</td>
+        <td class="text-xs-left">{{ alternativeLabels[props.item.answer].name }}</td>
         <td class="justify-center layout px-0">
           <v-btn icon class="mx-0" @click="editItem(props.item)">
             <v-icon color="teal">edit</v-icon>
@@ -54,18 +66,24 @@
 </template>
 
 <script>
-import { db } from '@/firebase';
+import { db } from '@/firebase'
 
 export default {
   name: 'Questions',
   firebase: {
     questions: db.ref('questions')
   },
-  data() {
+  data () {
     return {
       valid: true,
       valueRules: [v => !!v || 'Value is required'],
       dialog: false,
+      alternativeLabels: [
+        { name: 'Alternative 1', value: 0 },
+        { name: 'Alternative 2', value: 1 },
+        { name: 'Alternative 3', value: 2 },
+        { name: 'Alternative 4', value: 3 }
+      ],
       headers: [
         { text: 'Question', value: 'question' },
         { text: 'Alternatives', value: 'alternatives' },
@@ -74,53 +92,53 @@ export default {
       editedKey: '',
       editedItem: {
         question: '',
-        alternatives: '',
-        answer: ''
+        alternatives: ['', '', '', ''],
+        answer: -1
       },
       defaultItem: {
         question: '',
-        alternatives: '',
-        answer: ''
+        alternatives: ['', '', '', ''],
+        answer: -1
       }
-    };
+    }
   },
   methods: {
-    editItem(question) {
-      this.editedKey = question['.key'];
-      console.log('EditItem: ' + this.editedKey);
-      this.editedItem = Object.assign({}, question);
-      this.dialog = true;
+    editItem (question) {
+      this.editedKey = question['.key']
+      console.log('EditItem: ' + this.editedKey)
+      this.editedItem = Object.assign({}, question)
+      this.dialog = true
     },
-    deleteItem(question) {
-      const index = this.questions.indexOf(question);
+    deleteItem (question) {
       confirm('Are you sure you want to delete this item?') &&
-        this.$firebaseRefs.questions.child(question['.key']).remove();
+        this.$firebaseRefs.questions.child(question['.key']).remove()
     },
-    close() {
-      this.dialog = false;
+    close () {
+      this.dialog = false
       setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedKey = -1;
-      }, 300);
+        this.editedItem = Object.assign({}, this.defaultItem)
+        console.log(this.editedItem)
+        this.editedKey = -1
+      }, 300)
     },
-    save() {
-      console.log('Save: ' + this.editedKey);
+    save () {
+      console.log('Save: ' + this.editedKey)
       if (this.$refs.addQuestionForm.validate()) {
-        delete this.editedItem['.key'];
-        if (this.editedKey != '') {
+        delete this.editedItem['.key']
+        if (this.editedKey !== '') {
           this.$firebaseRefs.questions
             .child(this.editedKey)
-            .set(this.editedItem);
+            .set(this.editedItem)
         } else {
-          this.$firebaseRefs.questions.push(this.editedItem);
+          this.$firebaseRefs.questions.push(this.editedItem)
         }
-        this.close();
+        this.close()
       }
     }
   },
   computed: {
-    formTitle() {
-      return this.editedKey === '' ? 'New Item' : 'Edit Item';
+    formTitle () {
+      return this.editedKey === '' ? 'New Item' : 'Edit Item'
     }
   }
 }
