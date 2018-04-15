@@ -2,19 +2,16 @@
     <v-flex xs12 sm6 offset-sm3>
         <v-card>
             <v-card-title>
-                <span class="headline">Sign In</span>
+                <span class="headline">Login</span>
             </v-card-title>
             <v-card-text>
                 <v-form id="form" ref="loginForm" lazy-validation>
                     <v-text-field label="Email" :rules="emailRules" v-model="email" required></v-text-field>
-                    <v-text-field label="Password" :rules="passwordRules" hint="At least 5 characters" counter=100 v-model="password" required :append-icon="hidePassword ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (hidePassword = !hidePassword)" :type="hidePassword ? 'password' : 'text'"></v-text-field>
+                    <v-text-field label="Password" :rules="passwordRules" hint="At least 6 characters" counter=100 v-model="password" required :append-icon="hidePassword ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (hidePassword = !hidePassword)" :type="hidePassword ? 'password' : 'text'"></v-text-field>
                     <v-btn @click.native="login" :disabled="!valid">Login</v-btn>
                 </v-form>
                 <p>You don't have an account ? You can
                     <router-link to="/register">register</router-link>
-                </p>
-                <p v-show="user">
-                    <v-btn @click.native="logout">Logout</v-btn>
                 </p>
             </v-card-text>
         </v-card>
@@ -28,15 +25,14 @@ export default {
   name: 'login',
   data: function() {
     return {
-      user: firebase.auth().currentUser,
       valid: true,
       hidePassword: true,
       email: '',
       password: '',
       passwordRules: [
         v =>
-          (!!v && v.length >= 5 && v.length <= 100) ||
-          'Password between 5-100 characters'
+          (!!v && v.length >= 6 && v.length <= 100) ||
+          'Password between 6-100 characters'
       ],
       emailRules: [
         v => {
@@ -63,20 +59,6 @@ export default {
             }
           )
       }
-    },
-    logout: function() {
-      firebase
-        .auth()
-        .signOut()
-        .then(
-          () => {
-            console.log('Signed Out')
-            this.$router.replace('questions')
-          },
-          function(error) {
-            alert('Oops. ' + error.message)
-          }
-        )
     }
   }
 }

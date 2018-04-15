@@ -3,21 +3,43 @@
     <v-toolbar-title class="home" @click="home">OP Quiz</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn class="login-btn" @click="login">Login</v-btn>
+      <v-btn v-if="user" @click="logout">Logout</v-btn>
+      <v-btn v-else @click="login">Login</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
 import router from './router'
+import firebase from 'firebase'
 
 export default {
   name: 'navbar',
+  data() {
+    return {
+      user: firebase.auth().currentUser
+    }
+  },
   methods: {
-    login () {
+    login() {
       router.push('/login')
     },
-    home () {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            console.log('Signed Out')
+            this.user = null
+            router.push('/login')
+          },
+          function(error) {
+            alert('Oops. ' + error.message)
+          }
+        )
+    },
+    home() {
       router.push('/')
     }
   }
@@ -25,7 +47,7 @@ export default {
 </script>
 
 <style scoped>
-  .home {
-    cursor: pointer;
-  }
+.home {
+  cursor: pointer;
+}
 </style>
