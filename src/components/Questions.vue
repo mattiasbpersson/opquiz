@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-dialog v-model="dialog" max-width="500px">
-      <v-btn color="primary" dark slot="activator" class="mb-2">New Question</v-btn>
+      <v-btn v-show="user" color="primary" dark slot="activator" class="mb-2">New Question</v-btn>
       <v-card>
         <v-card-title>
           <span class="headline">{{ formTitle }}</span>
@@ -48,10 +48,10 @@
         <td class="text-xs-left">{{ props.item.alternatives[3] }}</td>
         <td class="text-xs-left">{{ alternativeLabels[props.item.answer].name }}</td>
         <td class="justify-center layout px-0">
-          <v-btn icon class="mx-0" @click="editItem(props.item)">
+          <v-btn v-show="user" icon class="mx-0" @click="editItem(props.item)">
             <v-icon color="teal">edit</v-icon>
           </v-btn>
-          <v-btn icon class="mx-0" @click="deleteItem(props.item)">
+          <v-btn v-show="user" icon class="mx-0" @click="deleteItem(props.item)">
             <v-icon color="pink">delete</v-icon>
           </v-btn>
         </td>
@@ -63,18 +63,20 @@
       </template>
     </v-data-table>
   </div>
-</template>
+</template>I
 
 <script>
 import { db } from '@/firebase'
+import firebase from 'firebase'
 
 export default {
   name: 'Questions',
   firebase: {
     questions: db.ref('questions')
   },
-  data () {
+  data() {
     return {
+      user: firebase.auth().currentUser,
       valid: true,
       valueRules: [v => !!v || 'Value is required'],
       dialog: false,
@@ -106,17 +108,17 @@ export default {
     }
   },
   methods: {
-    editItem (question) {
+    editItem(question) {
       this.editedKey = question['.key']
       console.log('EditItem: ' + this.editedKey)
       this.editedItem = Object.assign({}, question)
       this.dialog = true
     },
-    deleteItem (question) {
+    deleteItem(question) {
       confirm('Are you sure you want to delete this item?') &&
         this.$firebaseRefs.questions.child(question['.key']).remove()
     },
-    close () {
+    close() {
       this.dialog = false
       setTimeout(() => {
         this.editedItem = Object.assign({}, this.defaultItem)
@@ -124,7 +126,7 @@ export default {
         this.editedKey = -1
       }, 300)
     },
-    save () {
+    save() {
       console.log('Save: ' + this.editedKey)
       if (this.$refs.addQuestionForm.validate()) {
         delete this.editedItem['.key']
@@ -140,7 +142,7 @@ export default {
     }
   },
   computed: {
-    formTitle () {
+    formTitle() {
       return this.editedKey === '' ? 'New Item' : 'Edit Item'
     }
   }

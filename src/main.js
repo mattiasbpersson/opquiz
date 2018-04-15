@@ -16,7 +16,7 @@ Vue.use(VueFire)
 
 let app
 
-firebaseApp.auth().onAuthStateChanged(function (user) {
+firebaseApp.auth().onAuthStateChanged(function(user) {
   if (!app) {
     /* eslint-disable no-new */
     app = new Vue({
