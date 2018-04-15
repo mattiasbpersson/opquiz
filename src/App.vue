@@ -1,13 +1,17 @@
 <template>
     <div id="app">
         <v-app dark>
-            <img src="./assets/logo.png">
-            <router-view/>
+          <navbar/>
+          <router-view/>
         </v-app>
     </div>
 </template>
 
 <script>
+import Navbar from './Navbar'
+export default {
+  components: {Navbar}
+}
 </script>
 
 <style>
