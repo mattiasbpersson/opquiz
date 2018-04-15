@@ -2,7 +2,7 @@
     <div id="app">
         <v-app dark>
           <navbar/>
-          <router-view/>
+          <router-view class="router"/>
         </v-app>
     </div>
 </template>
@@ -23,4 +23,7 @@ export default {
         color: #2c3e50;
         margin-top: 60px;
     }
+  .router {
+    margin-top: 30px;
+  }
 </style>
