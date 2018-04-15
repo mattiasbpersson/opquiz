@@ -24,7 +24,7 @@ import firebase from 'firebase'
 
 export default {
   name: 'register',
-  data: function () {
+  data: function() {
     return {
       valid: true,
       hidePassword: true,
@@ -52,7 +52,7 @@ export default {
     }
   },
   methods: {
-    register: function () {
+    register: function() {
       if (this.$refs.registerForm.validate()) {
         firebase
           .auth()
@@ -67,7 +67,7 @@ export default {
           )
       }
     },
-    setDisplayName: function (user) {
+    setDisplayName: function(user) {
       user
         .updateProfile({
           displayName: this.username
@@ -75,7 +75,7 @@ export default {
         .then(user => {
           this.$router.replace('questions')
         })
-        .catch(function (err) {
+        .catch(function(err) {
           alert('Oops. ' + err.message)
         })
     }

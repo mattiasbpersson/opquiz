@@ -13,6 +13,9 @@
                 <p>You don't have an account ? You can
                     <router-link to="/register">register</router-link>
                 </p>
+                <p v-show="user">
+                    <v-btn @click.native="logout">Logout</v-btn>
+                </p>
             </v-card-text>
         </v-card>
     </v-flex>
@@ -23,8 +26,9 @@ import firebase from 'firebase'
 
 export default {
   name: 'login',
-  data: function () {
+  data: function() {
     return {
+      user: firebase.auth().currentUser,
       valid: true,
       hidePassword: true,
       email: '',
@@ -45,7 +49,7 @@ export default {
     }
   },
   methods: {
-    login: function () {
+    login: function() {
       if (this.$refs.loginForm.validate()) {
         firebase
           .auth()
@@ -54,11 +58,25 @@ export default {
             user => {
               this.$router.replace('questions')
             },
-            err => {
-              alert('Oops. ' + err.message)
+            error => {
+              alert('Oops. ' + error.message)
             }
           )
       }
+    },
+    logout: function() {
+      firebase
+        .auth()
+        .signOut()
+        .then(
+          () => {
+            console.log('Signed Out')
+            this.$router.replace('questions')
+          },
+          function(error) {
+            alert('Oops. ' + error.message)
+          }
+        )
     }
   }
 }
