@@ -20,12 +20,11 @@
 </template>
 
 <script>
-import firebase from 'firebase';
-import { db } from '@/firebase';
+import firebase from 'firebase'
 
 export default {
   name: 'register',
-  data: function() {
+  data: function () {
     return {
       valid: true,
       hidePassword: true,
@@ -44,44 +43,44 @@ export default {
       ],
       emailRules: [
         v => {
-          return !!v || 'E-mail is required';
+          return !!v || 'E-mail is required'
         },
         v =>
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           'E-mail must be valid'
       ]
-    };
+    }
   },
   methods: {
-    register: function() {
+    register: function () {
       if (this.$refs.registerForm.validate()) {
         firebase
           .auth()
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(
             user => {
-              this.setDisplayName(user);
+              this.setDisplayName(user)
             },
             err => {
-              alert('Oops. ' + err.message);
+              alert('Oops. ' + err.message)
             }
-          );
+          )
       }
     },
-    setDisplayName: function(user) {
+    setDisplayName: function (user) {
       user
         .updateProfile({
           displayName: this.username
         })
         .then(user => {
-          this.$router.replace('questions');
+          this.$router.replace('questions')
         })
-        .catch(function(err) {
-          alert('Oops. ' + err.message);
-        });
+        .catch(function (err) {
+          alert('Oops. ' + err.message)
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>

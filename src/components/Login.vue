@@ -19,11 +19,11 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from 'firebase'
 
 export default {
   name: 'login',
-  data: function() {
+  data: function () {
     return {
       valid: true,
       hidePassword: true,
@@ -36,32 +36,32 @@ export default {
       ],
       emailRules: [
         v => {
-          return !!v || 'E-mail is required';
+          return !!v || 'E-mail is required'
         },
         v =>
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           'E-mail must be valid'
       ]
-    };
+    }
   },
   methods: {
-    login: function() {
+    login: function () {
       if (this.$refs.loginForm.validate()) {
         firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.password)
           .then(
             user => {
-              this.$router.replace('questions');
+              this.$router.replace('questions')
             },
             err => {
-              alert('Oops. ' + err.message);
+              alert('Oops. ' + err.message)
             }
-          );
+          )
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>
