@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Questions from '@/components/Questions'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import Question from '@/components/Question'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -27,6 +28,11 @@ let router = new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/questions/:questionKey',
+      name: 'Question',
+      component: Question
     }
   ]
 })
