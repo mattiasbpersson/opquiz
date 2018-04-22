@@ -75,7 +75,7 @@ export default {
     firebaseBound() {
       this.isLoading = false
       this.questionsNotFound =
-        this.questions === undefined || this.questions.length == 0
+        this.questions === undefined || this.questions.length === 0
       if (!this.questionsNotFound) {
         this.currentQuestion = this.questions[this.currentIndex]
         this.gameSize = this.questions.length
