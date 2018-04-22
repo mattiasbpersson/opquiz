@@ -18,10 +18,10 @@
                     <v-container fluid grid-list-md>
                         <v-layout row wrap>
                             <v-flex xs6 true v-for="(alternative, index) in currentQuestion.alternatives" :key="index">
-                                <v-card>
-                                    <v-card-actions>
-                                        <v-btn @click.native="answer(currentQuestion, index)" block flat dark>{{alternative}}</v-btn>
-                                    </v-card-actions>
+                                <v-card height="100%" @click.native="answer(currentQuestion, index)" dark>
+                                    <v-card-text>
+                                        {{alternative}}
+                                    </v-card-text>
                                 </v-card>
                             </v-flex>
                         </v-layout>
