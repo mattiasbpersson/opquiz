@@ -2,6 +2,7 @@
   <v-toolbar fixed>
     <v-toolbar-title class="home" @click="home">OP Quiz</v-toolbar-title>
     <v-btn @click="randomQuestion">Random Question</v-btn>
+    <v-btn @click="playGame">Play Game</v-btn>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn v-if="user" @click="logout">Logout</v-btn>
@@ -58,6 +59,10 @@ export default {
     randomQuestion() {
       const index = Math.floor(Math.random() * this.questions.length)
       router.push(`/questions/${this.questions[index]['.key']}`)
+    },
+
+    playGame() {
+      router.push(`/game`)
     }
   }
 }

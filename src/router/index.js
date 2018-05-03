@@ -4,6 +4,7 @@ import Questions from '@/components/Questions'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Question from '@/components/Question'
+import Game from '@/components/Game'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -33,6 +34,11 @@ let router = new Router({
       path: '/questions/:questionKey',
       name: 'Question',
       component: Question
+    },
+    {
+      path: '/game',
+      name: 'Game',
+      component: Game
     }
   ]
 })
