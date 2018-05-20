@@ -13,20 +13,8 @@
                 <v-flex xs12 sm6 md4>
                   <v-text-field label="Question" :rules="valueRules" v-model="editedItem.question" required></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field value=0 :label=alternativeLabels[0].name :rules="valueRules" v-model="editedItem.alternatives[0]" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field value=1 :label=alternativeLabels[1].name :rules="valueRules" v-model="editedItem.alternatives[1]" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field value=2 :label=alternativeLabels[2].name :rules="valueRules" v-model="editedItem.alternatives[2]" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-text-field value=3 :label=alternativeLabels[3].name :rules="valueRules" v-model="editedItem.alternatives[3]" required></v-text-field>
-                </v-flex>
-                <v-flex xs12 sm6 md4>
-                  <v-select label="Answer" item-value="value" item-text="name" v-model="editedItem.answer" :items="alternativeLabels" :rules="[v => v >=0 || 'Selection is required']" required></v-select>
+                <v-flex xs12 sm6 md4 v-for="(alternativeLabel,index) in alternativeLabels" :key="alternativeLabel.name">
+                  <v-text-field value=index :label=alternativeLabel.name :rules="valueRules" v-model="editedItem.alternatives[index]" required></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -42,10 +30,7 @@
     <v-data-table :headers="headers" :items="questions" hide-actions class="elevation-1">
       <template slot="items" slot-scope="props">
         <td class="text-xs-left">{{ props.item.question }}</td>
-        <td class="text-xs-left">{{ props.item.alternatives[0] }}</td>
-        <td class="text-xs-left">{{ props.item.alternatives[1] }}</td>
-        <td class="text-xs-left">{{ props.item.alternatives[2] }}</td>
-        <td class="text-xs-left">{{ props.item.alternatives[3] }}</td>
+        <td class="text-xs-left" v-for="alternative in props.item.alternatives" :key="alternative">{{ alternative }}</td>
         <td class="text-xs-left">{{ alternativeLabels[props.item.answer].name }}</td>
         <td class="justify-center layout px-0">
           <v-btn v-show="user" icon class="mx-0" @click="editItem(props.item)">
