@@ -55,13 +55,6 @@ export default {
     this.bindDbRefToQuestions(`questions`)
   },
 
-  watch: {
-    $route(to) {
-      this.isLoading = true
-      this.bindDbRefToQuestion(`questions`)
-    }
-  },
-
   methods: {
     bindDbRefToQuestions(dbRef) {
       this.$bindAsArray(
